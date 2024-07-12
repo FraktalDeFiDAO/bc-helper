@@ -1,4 +1,4 @@
-module FraktalDeFiDAO/bc-helper
+module github.com/FraktalDeFiDAO/bc-helper
 
 go 1.22.4
 
