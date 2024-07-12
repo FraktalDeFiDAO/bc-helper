@@ -6,7 +6,7 @@ import (
 	"log"
 	"math/big"
 
-	wallet "FraktalDeFiDAO/bc-helper/ethers/wallet"
+	wallet "github.com/FraktalDeFiDAO/bc-helper/ethers/wallet"
 
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/core/types"
