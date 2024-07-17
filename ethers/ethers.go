@@ -99,11 +99,17 @@ func GetGasPrice(client *ethclient.Client) (gasPrice *big.Int) {
 	return gasPrice
 }
 
-func BuildSendETH(client *ethclient.Client, wallet wallet.Wallet, to common.Address, amount *big.Int) (signedTx *types.Transaction) {
+func BuildSendETH(
+	client *ethclient.Client,
+	wallet wallet.Wallet,
+	to common.Address,
+	amount *big.Int
+) (signedTx *types.Transaction) {
 	gasLimit := uint64(21000)
 	gasPrice := GetGasPrice(client)
 
 	nonce := GetNonce(client, wallet.Address)
+
 	var data []byte
 	var err error
 
