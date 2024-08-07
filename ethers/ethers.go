@@ -103,7 +103,7 @@ func BuildSendETH(
 	client *ethclient.Client,
 	wallet wallet.Wallet,
 	to common.Address,
-	amount *big.Int
+	amount *big.Int,
 ) (signedTx *types.Transaction) {
 	gasLimit := uint64(21000)
 	gasPrice := GetGasPrice(client)
