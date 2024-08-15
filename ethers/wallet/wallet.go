@@ -9,6 +9,12 @@ import (
 	"github.com/ethereum/go-ethereum/crypto"
 )
 
+type IWallet interface {
+	AddressToString() string
+	PublicKeyToString() string
+	PrivateKeyToString() string
+	ShowInfo(wallet Wallet) (walletInfo WalletInfo)
+}
 type Wallet struct {
 	PrivateKey ecdsa.PrivateKey
 	PublicKey  ecdsa.PublicKey
@@ -43,13 +49,10 @@ func GenerateWallet() (wallet Wallet) {
 }
 
 func (w *Wallet) ShowInfo(wallet Wallet) (walletInfo WalletInfo) {
-	privateKeyBytes := crypto.FromECDSA(&wallet.PrivateKey)
-	publicKeyBytes := crypto.FromECDSAPub(&wallet.PublicKey)
-
 	walletInfo = WalletInfo{
-		PrivateKey: hexutil.Encode(privateKeyBytes),
-		PublicKey:  hexutil.Encode(publicKeyBytes),
-		Address:    wallet.Address.Hex(),
+		PrivateKey: w.PrivateKeyToString(),
+		PublicKey:  w.PrivateKeyToString(),
+		Address:    w.AddressToString(),
 	}
 	return walletInfo
 }
@@ -76,4 +79,23 @@ func FromPrivateKeyString(privateKeyStr string) (wallet Wallet) {
 	}
 	return wallet
 
+}
+
+func (w *Wallet) PrivateKeyToString() string {
+	privateKeyBytes := crypto.FromECDSA(&w.PrivateKey)
+	return hexutil.Encode(privateKeyBytes)[4:]
+}
+func (w *Wallet) PublicKeyToString() string {
+	publicKey := w.PrivateKey.Public()
+
+	publicKeyECDSA, ok := publicKey.(*ecdsa.PublicKey)
+	if !ok {
+		log.Fatal("error casting public key to ECDSA")
+	}
+
+	publicKeyBytes := crypto.FromECDSAPub(publicKeyECDSA)
+	return hexutil.Encode(publicKeyBytes)[4:]
+}
+func (w *Wallet) AddressToString() string {
+	return w.Address.Hex()
 }
