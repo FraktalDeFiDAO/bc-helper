@@ -12,8 +12,10 @@ run: build
 
 run-versioner: build-versioner
 	./bin/bc-versioner
+
 run-version-control: build-version-control
-	./bin/bc-version-control
+	echo "New Version: ${VERSION}"
+	./bin/bc-version-control ${VERSION}
 
 setup:	init tidy
 
@@ -23,3 +25,6 @@ init:
 tidy:
 	go mod tidy
 	go mod vendor
+
+arg-test:
+	echo "SHOW ME: ${INT} ${STR}"
