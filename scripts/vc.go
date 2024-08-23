@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"log"
 	"os/exec"
 )
@@ -9,14 +10,14 @@ func main() {
 	AddAndCommit("updateing...", []string{"."})
 	err := GitPush("origin", "master")
 	if err != nil {
-		log.Fatal("ERROR (GitAdd):", err)
+		log.Fatal("ERROR:", err)
 	}
 
 }
 func AddAndCommit(comment string, files []string) {
 	err := GitAdd(files)
 	if err != nil {
-		log.Fatal("ERROR (GitAdd):", err)
+		log.Fatal("ERROR:", err)
 	}
 	GitCommit(comment)
 	if err != nil {
@@ -33,7 +34,7 @@ func GitAdd(files []string) error {
 	out, err := Git(cmd...)
 
 	if err != nil {
-		return err
+		return errors.New("ADD =>" + err.Error())
 	}
 
 	log.Println(string(out))
@@ -46,7 +47,7 @@ func GitCommit(comment string) error {
 	out, err := Git("commit", "-m", comment)
 
 	if err != nil {
-		return err
+		return errors.New("COMMIT =>" + err.Error())
 	}
 	log.Println("Git Commit =>", comment)
 
@@ -71,7 +72,7 @@ func Git(args ...string) (string, error) {
 func GitPush(target string, branch string) error {
 	out, err := Git(target, branch)
 	if err != nil {
-		return err
+		return errors.New("PUSH =>" + err.Error())
 	}
 	log.Println("push", out)
 	return nil
