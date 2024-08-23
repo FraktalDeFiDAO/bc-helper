@@ -1,8 +1,19 @@
-build:
+build: tidy
 	go build -o bin/bc-helper src/main.go
 
+build-versioner: tidy
+	go build -o bin/bc-versioner scripts/versioning.go
+
+build-version-control: tidy
+	go build -o bin/bc-version-control scripts/vc.go
+
 run: build
-	go run src/main.go
+	./bin/bc-helper
+
+run-versioner: build-versioner
+	./bin/bc-versioner
+run-version-control: build-version-control
+	./bin/bc-version-control
 
 setup:	init tidy
 
