@@ -43,7 +43,7 @@ func GitAdd(files []string) error {
 		return err
 	}
 
-	log.Println("CMD =>", cmd, out)
+	log.Println("CMD =>", cmd, string(out))
 
 	return nil
 }
@@ -64,7 +64,7 @@ func GitCommit(comment string) error {
 	}
 	log.Println("Git Commit =>", comment)
 
-	log.Println("CMD =>", cmd, out)
+	log.Println("CMD =>", cmd, string(out))
 
 	return nil
 
