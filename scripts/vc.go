@@ -60,7 +60,7 @@ func GitCommit(comment string) error {
 func Git(args ...string) (string, error) {
 	cmd := exec.Command("git", args...)
 
-	out, err := cmd.Output()
+	out, err := cmd.CombinedOutput()
 
 	if err != nil {
 		return "", err
