@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"log"
 	"os"
 	"strconv"
@@ -21,27 +22,53 @@ var (
 	versionUpdateType  string
 	versionUpdateTypes []string
 	versionFile        string
+	versionShow        bool
 )
 
 func main() {
-	versionUpdateTypes[0] = "minor"
-	versionUpdateTypes[1] = "major"
-	versionUpdateTypes[2] = "release"
+	versionFile = "./version"
 
-	flag.StringVar(&versionUpdateType, "update-type", "minor", "Type of update (minor, major or release)")
+	versionUpdateTypes = append(versionUpdateTypes, "minor")
+	versionUpdateTypes = append(versionUpdateTypes, "major")
+	versionUpdateTypes = append(versionUpdateTypes, "release")
 
-	versionChunks := strings.Split(version, ".")
+	flag.StringVar(&versionUpdateType, "update-type", "", "Type of update (minor, major or release)")
+	flag.BoolVar(&versionShow, "version", false, "Type of update (minor, major or release)")
+	flag.Parse()
+	// log.Println(len(os.Args), os.Args, versionUpdateType)
+	if versionShow {
+		ShowVersion()
+
+	}
+	if _, err := os.Stat(versionFile); err != nil {
+		if err := os.WriteFile(versionFile, []byte("0.0.1"), 0644); err != nil {
+			log.Fatal("Error writing version file =>", err)
+		}
+	}
+	versionBytes, err := os.ReadFile(versionFile)
+	if err != nil {
+		log.Fatalln("Error reading version file =>", err)
+	}
+	version = string(versionBytes)
+	// versionChunks := strings.Split(version, ".")
+
+	// log.Println("versionChunks =>", versionChunks, version)
 
 	if versionUpdateType == versionUpdateTypes[0] {
-		u, err := strconv.Atoi(versionChunks[2])
-		if err != nil {
-			log.Fatal(err)
-		}
-		versionChunks[2] = strconv.Itoa(u + 1)
+		IncMinor()
+	} else if versionUpdateType == versionUpdateTypes[1] {
+		IncMajor()
+	} else if versionUpdateType == versionUpdateTypes[2] {
+		IncRelease()
+	}
+
+	if err := os.WriteFile(versionFile, []byte(version), 0644); err != nil {
+		log.Fatalln("Error writing version file =>", err)
 	}
 }
 
 func IncMinor() {
+	log.Println("UPDATE MINOR", versionUpdateType)
 	versionChunks := strings.Split(version, ".")
 
 	u, err := strconv.Atoi(versionChunks[2])
@@ -54,6 +81,8 @@ func IncMinor() {
 }
 
 func IncMajor() {
+	log.Println("UPDATE MAJOR", versionUpdateType)
+
 	versionChunks := strings.Split(version, ".")
 
 	u, err := strconv.Atoi(versionChunks[1])
@@ -69,6 +98,8 @@ func IncMajor() {
 }
 
 func IncRelease() {
+	log.Println("UPDATE RELEASE", versionUpdateType)
+
 	versionChunks := strings.Split(version, ".")
 
 	u, err := strconv.Atoi(versionChunks[0])
@@ -84,10 +115,10 @@ func IncRelease() {
 
 }
 
-func GetVersion() {
+func ShowVersion() {
 	v, err := os.ReadFile(versionFile)
 	if err != nil {
 		log.Fatal(err)
 	}
-
+	fmt.Println("Version =>", string(v))
 }

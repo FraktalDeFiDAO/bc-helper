@@ -6,4 +6,5 @@ cd "${SCRIPT_DIR}/.."
 
 BASE_DIR="${PWD}"
 
-echo $BASE_DIR
+go build -o bin/versioner "${SCRIPT_DIR}/versioning.go"
+./bin/versioner ${@}
