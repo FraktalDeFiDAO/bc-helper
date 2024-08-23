@@ -7,7 +7,11 @@ import (
 
 func main() {
 	AddAndCommit("updateing...", []string{"."})
-	GitPush("origin", "master")
+	err := GitPush("origin", "master")
+	if err != nil {
+		log.Fatal("ERROR (GitAdd):", err)
+	}
+
 }
 func AddAndCommit(comment string, files []string) {
 	err := GitAdd(files)
