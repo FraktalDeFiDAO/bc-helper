@@ -30,10 +30,13 @@ func GitAdd(files []string) error {
 		// fmt.Println("Error: ", err)
 		return err
 	}
-	var out strings.Builder
-	cmd.Stdout = &out
+	out, err := cmd.Output()
 
-	log.Println("CMD =>", cmd)
+	if err != nil {
+		return err
+	}
+
+	log.Println("CMD =>", cmd, out)
 
 	return nil
 }
