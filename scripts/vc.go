@@ -26,7 +26,7 @@ func AddAndCommit(comment string, files []string) {
 }
 
 func GitAdd(files []string) error {
-
+	log.Println("Git => add")
 	cmd := []string{
 		"add",
 	}

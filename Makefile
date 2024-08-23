@@ -11,7 +11,7 @@ run: build
 	./bin/bc-helper
 
 run-versioner: build-versioner
-	./bin/bc-versioner
+	./bin/bc-versioner -${CMD} ${ARG} 
 
 run-version-control: build-version-control
 	echo "New Version: ${VERSION}"
@@ -26,5 +26,12 @@ tidy:
 	go mod tidy
 	go mod vendor
 
-arg-test:
-	echo "SHOW ME: ${INT} ${STR}"
+
+git-add:
+	clear
+	set -euo pipefail
+	[[ "${FILES}" == "" ]] && sh -c "./bin/bc-version-control -add ." || sh -c "./bin/bc-version-control -add ${FILES}"
+	
+	
+git-commit:
+	sh -c "./bin/bc-version-control -commit '${COMMENT}'"

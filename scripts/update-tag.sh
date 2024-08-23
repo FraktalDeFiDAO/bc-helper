@@ -6,5 +6,5 @@ cd "${SCRIPT_DIR}/.."
 
 BASE_DIR="${PWD}"
 
-go build -o bin/versioner "${SCRIPT_DIR}/versioning.go"
-./bin/versioner ${@}
+go build -o bin/bc-versioner "${SCRIPT_DIR}/versioning.go" && \
+    ./bin/bc-versioner ${@}
