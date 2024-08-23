@@ -69,6 +69,6 @@ func GitPush(target string, branch string) error {
 	if err != nil {
 		return err
 	}
-	log.Println(out)
+	log.Println("push", out)
 	return nil
 }
