@@ -7,6 +7,7 @@ import (
 
 func main() {
 	AddAndCommit("updateing...", []string{"."})
+	Git("push", "origin", "master")
 }
 func AddAndCommit(comment string, files []string) {
 	err := GitAdd(files)
