@@ -70,7 +70,7 @@ func Git(args ...string) (string, error) {
 }
 
 func GitPush(target string, branch string) error {
-	out, err := Git(target, branch)
+	out, err := Git("push", target, branch)
 	if err != nil {
 		return errors.New("PUSH =>" + err.Error())
 	}
