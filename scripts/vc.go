@@ -63,3 +63,12 @@ func Git(args ...string) (string, error) {
 
 	return string(out), nil
 }
+
+func GitPush(target string, branch string) error {
+	out, err := Git(target, branch)
+	if err != nil {
+		return err
+	}
+	log.Println(out)
+	return nil
+}
