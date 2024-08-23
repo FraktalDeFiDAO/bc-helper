@@ -47,8 +47,11 @@ func GitCommit(comment string) error {
 		// fmt.Println("Error: ", err)
 		return err
 	}
-	var out strings.Builder
-	cmd.Stdout = &out
+	out, err := cmd.Output()
+
+	if err != nil {
+		return err
+	}
 
 	log.Println("CMD =>", cmd, out)
 
