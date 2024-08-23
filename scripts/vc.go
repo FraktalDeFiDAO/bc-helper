@@ -50,7 +50,7 @@ func GitCommit(comment string) error {
 	var out strings.Builder
 	cmd.Stdout = &out
 
-	log.Println("CMD =>", cmd)
+	log.Println("CMD =>", cmd, out)
 
 	return nil
 
