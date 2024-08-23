@@ -21,6 +21,7 @@ func GitAdd(files []string) error {
 	} else {
 		fileList = strings.Join(files, " ")
 	}
+	log.Println("Git Add =>", fileList)
 	_cmd := "git add " + fileList
 	// + " && git commit -m " + comment
 	chunks := strings.Split(_cmd, " ")
@@ -55,6 +56,7 @@ func GitCommit(comment string) error {
 	if err != nil {
 		return err
 	}
+	log.Println("Git Commit =>", comment)
 
 	log.Println("CMD =>", cmd, out)
 
