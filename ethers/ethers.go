@@ -5,9 +5,12 @@ import (
 	"context"
 	"log"
 	"math/big"
+	"time"
 
 	wallet "github.com/FraktalDeFiDAO/bc-helper/ethers/wallet"
+	"github.com/ethereum/go-ethereum/event"
 
+	"github.com/ethereum/go-ethereum"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/core/types"
 	"github.com/ethereum/go-ethereum/ethclient"
@@ -175,4 +178,19 @@ func SendRawTx(client *ethclient.Client, rawTxBytes []byte) (tx *types.Transacti
 	}
 
 	return tx
+}
+
+func Subscribe(
+	client *ethclient.Client,
+	addresses []common.Address,
+	query ethereum.FilterQuery,
+	logs chan types.Log,
+) event.Subscription {
+
+	sub := event.Resubscribe(2*time.Second, func(ctx context.Context) (ethereum.Subscription, error) {
+		log.Println("Starting Subscription...")
+		return client.SubscribeFilterLogs(context.Background(), query, logs)
+	})
+
+	return sub
 }
