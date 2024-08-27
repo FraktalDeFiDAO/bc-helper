@@ -5,7 +5,6 @@ import (
 	"context"
 	"log"
 	"math/big"
-	"time"
 
 	wallet "github.com/FraktalDeFiDAO/bc-helper/ethers/wallet"
 	"github.com/ethereum/go-ethereum/event"
@@ -187,10 +186,16 @@ func Subscribe(
 	logs chan types.Log,
 ) event.Subscription {
 
-	sub := event.Resubscribe(2*time.Second, func(ctx context.Context) (ethereum.Subscription, error) {
-		log.Println("Starting Subscription...")
-		return client.SubscribeFilterLogs(context.Background(), query, logs)
-	})
+	// sub := event.Resubscribe(
+	// 	2*time.Second,
+	// 	func(ctx context.Context) (ethereum.Subscription, error) {
+	// 		log.Println("Starting Subscription...")
+	// 		return client.SubscribeFilterLogs(context.Background(), query, logs)
+	// 	})
+	sub, err := client.SubscribeFilterLogs(context.Background(), query, logs)
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	return sub
 }

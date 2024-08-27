@@ -17,15 +17,15 @@ run-version-control: build-version-control
 	echo "New Version: ${VERSION}"
 	./bin/bc-version-control ${VERSION}
 
-setup:	init tidy
-
 init:
 	go mod init FraktalDeFiDAO/bc-helper
+
+setup:	init tidy
+
 
 tidy:
 	go mod tidy
 	go mod vendor
-
 
 git-add:
 	clear
@@ -35,3 +35,4 @@ git-add:
 	
 git-commit:
 	sh -c "./bin/bc-version-control -commit '${COMMENT}'"
+

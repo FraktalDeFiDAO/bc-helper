@@ -8,8 +8,23 @@ import (
 )
 
 type IUniswap interface {
-	Swap() ([]*big.Int, error)
+	Swap(SwapParams) ([]*big.Int, error)
 	Liquidity() (*[]big.Int, error)
+}
+
+type UniswapPoolType string
+
+const (
+	UniPoolV2 UniswapPoolType = "UniswapV2Pair"
+	UniPoolV3                 = "UniswapV3Pool"
+)
+
+type SwapParams struct {
+	TokenIn     common.Address
+	TokenOut    common.Address
+	AmountIn    *big.Int
+	AmountOut   *big.Int
+	PoolAddress *big.Int
 }
 
 func SortTokens(tokenA common.Address, tokenB common.Address) (common.Address, common.Address) {
