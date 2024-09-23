@@ -57,7 +57,7 @@ func (w *Wallet) ShowInfo(wallet Wallet) (walletInfo WalletInfo) {
 	return walletInfo
 }
 
-func FromPrivateKeyString(privateKeyStr string) (wallet Wallet) {
+func FromPrivateKeyString(privateKeyStr string) (wallet *Wallet) {
 	privateKey, err := crypto.HexToECDSA(privateKeyStr)
 
 	if err != nil {
@@ -72,7 +72,7 @@ func FromPrivateKeyString(privateKeyStr string) (wallet Wallet) {
 
 	address := crypto.PubkeyToAddress(*publicKeyECDSA).Hex()
 
-	wallet = Wallet{
+	wallet = &Wallet{
 		PrivateKey: *privateKey,
 		PublicKey:  *publicKeyECDSA,
 		Address:    common.HexToAddress(address),
