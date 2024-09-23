@@ -83,7 +83,7 @@ func FromPrivateKeyString(privateKeyStr string) (wallet *Wallet) {
 
 func (w *Wallet) PrivateKeyToString() string {
 	privateKeyBytes := crypto.FromECDSA(&w.PrivateKey)
-	return hexutil.Encode(privateKeyBytes)[4:]
+	return hexutil.Encode(privateKeyBytes)[2:]
 }
 func (w *Wallet) PublicKeyToString() string {
 	publicKey := w.PrivateKey.Public()
