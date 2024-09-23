@@ -1,4 +1,4 @@
-package main
+package versioning
 
 import (
 	"flag"
@@ -25,7 +25,7 @@ var (
 	versionShow        bool
 )
 
-func main() {
+func Versioning() {
 	versionFile = "./version"
 
 	versionUpdateTypes = append(versionUpdateTypes, "minor")
@@ -120,5 +120,5 @@ func ShowVersion() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println("Version =>", string(v))
+	fmt.Println("Version =>", "v"+string(v))
 }

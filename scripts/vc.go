@@ -7,22 +7,28 @@ import (
 )
 
 func main() {
+
+}
+func UpdateTag(tag string) error {
 	AddAndCommit("updateing...", []string{"."})
 	err := GitPush("origin", "master")
 	if err != nil {
-		log.Fatal("ERROR:", err)
+		return errors.New("Error updateing tag...\n" + err.Error())
 	}
-
+	GitTag(tag)
+	GitPushTag()
+	return nil
 }
-func AddAndCommit(comment string, files []string) {
+func AddAndCommit(comment string, files []string) error {
 	err := GitAdd(files)
 	if err != nil {
-		log.Fatal("ERROR:", err)
+		return errors.New("ERROR =>" + err.Error())
 	}
 	GitCommit(comment)
 	if err != nil {
-		log.Fatal("ERROR (GitCommit):", err)
+		return errors.New("ERROR (GitCommit) =>" + err.Error())
 	}
+	return nil
 }
 
 func GitAdd(files []string) error {
@@ -34,7 +40,7 @@ func GitAdd(files []string) error {
 	out, err := Git(cmd...)
 
 	if err != nil {
-		return errors.New("ADD =>" + err.Error())
+		return errors.New("GIT ADD =>" + err.Error())
 	}
 
 	log.Println(string(out))
@@ -78,4 +84,28 @@ func GitPush(target string, branch string) error {
 
 	log.Println(string(out))
 	return nil
+}
+
+func GitTag(tag string) error {
+	out, err := Git("tag", tag)
+	if err != nil {
+		return errors.New("Git Tag Error =>" + err.Error())
+	}
+	log.Println("Git Tag =>", tag)
+
+	log.Println(string(out))
+	return nil
+
+}
+
+func GitPushTag() error {
+	out, err := Git("push", "--tags")
+	if err != nil {
+		return errors.New("Git Tag Error =>" + err.Error())
+	}
+	log.Println("==> Git Tags <==")
+
+	log.Println(string(out))
+	return nil
+
 }

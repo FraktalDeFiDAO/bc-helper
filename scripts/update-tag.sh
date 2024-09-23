@@ -5,6 +5,9 @@ SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 cd "${SCRIPT_DIR}/.."
 
 BASE_DIR="${PWD}"
+ARGS="${@}"
 
-go build -o bin/bc-versioner "${SCRIPT_DIR}/versioning.go" && \
-    ./bin/bc-versioner ${@}
+
+./bin/bc-versioner -update-type minor && git tag $(cat "${BASE_DIR}/version") \
+    && go build -o bin/bc-version-control "${SCRIPT_DIR}/vc.go" \
+    && git push --tags
