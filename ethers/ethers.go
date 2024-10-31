@@ -198,7 +198,7 @@ func Subscribe(
 
 	subTimeout := time.Second * 2
 
-	sub := event.Resubscribe(subTimeout, resubFunc(client, query, logs))
+	sub := event.Resubscribe(subTimeout, ResubFunc(client, query, logs))
 
 	return sub
 }
