@@ -179,7 +179,7 @@ func SendRawTx(client *ethclient.Client, rawTxBytes []byte) (tx *types.Transacti
 
 	return tx
 }
-func resubFunc(
+func ResubFunc(
 	client *ethclient.Client,
 	query ethereum.FilterQuery,
 	logs chan types.Log,
