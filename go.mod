@@ -2,7 +2,10 @@ module github.com/FraktalDeFiDAO/bc-helper
 
 go 1.22.4
 
-require github.com/ethereum/go-ethereum v1.14.11
+require (
+	github.com/ethereum/go-ethereum v1.14.11
+	github.com/shopspring/decimal v1.4.0
+)
 
 require (
 	github.com/Microsoft/go-winio v0.6.2 // indirect
